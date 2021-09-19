@@ -1,0 +1,282 @@
+
+Serialization : https://www.geeksforgeeks.org/serialization-in-java/
+					--> Refer Serialization.png
+					--> It is process to save/persist state of object and travel the object through network.
+					--> Serialization may write the Object into file or Database
+					--> The object is converted as byteStream and passed over network and then de-serialized back as object.
+					--> Transient variables will not be serialized (values will  be int 0 , Object null)
+					--> static variable will not be serialized (will have value initialized after de-serialization)
+					--> Serialization  versionID : id generated at run time for Serialization  process .
+					--> This will be used during de-serialization to check if sender and receiver used the same class for object Serialization process.
+					--> Else if versionID is different/mismatch then this will result in InvalidClassException.
+					--> If the versionID is not explicitly  defined in class , the the Serialization  runtime will calculate the serilization versionid
+					--> It is recommended to explicitly  declare Serialization  versionID
+					--> "serialver" is tool in JDK  generate the Serialization  versionID.
+				
+						CODE:
+							FileOutputStream file = new FileOutputStream(filename); 
+							ObjectOutputStream out = new ObjectOutputStream(file); 
+							out.writeObject(object); 
+							
+							FileInputStream file = new FileInputStream(filename); 
+							ObjectInputStream in = new ObjectInputStream(file); 
+							object1 = (Demo)in.readObject(); 
+							 
+
+Externalization : 
+						--> Default serialization does not protect sensitive information such as passwords and credentials
+						--> Thus externalization comes to give the programmers full control in reading and writing objects during serialization.
+						--> Have the object’s class implemented the java.io.Externalizable interface.
+						--> Implement your own code to write object’s states in the writeExternal() method and read object’s states in the readExternal() method.
+								public void writeExternal(ObjectOutput out) {
+								    out.writeInt(code);
+								    out.writeObject(name);
+								    out.writeObject("");
+								    }
+								 
+								 public void readExternal(ObjectInput in) {
+								    this.code = in.readInt();
+								    this.name = (String) in.readObject();
+								    this.password = (String) in.readObject();
+								    }
+								    
+								    
+GarbageColection :
+					--> The object which loses it’s reference, is marked for deletion from the heap memory
+					--> There are generally four different ways to make an object eligible for garbage collection.
+					--> Nullifying the reference variable
+					--> Re-assigning the reference variable
+					--> Object created inside method
+					--> Island of Isolation : One Object refer another and vice-versa , so both need to be nullified
+					
+					--> Using System.gc() method : System class contain static method gc() for requesting JVM to run Garbage Collector.
+					--> Using Runtime.getRuntime().gc() method : Runtime class allows the application to interface with the JVM in which the application is running. Hence by using its gc() method, we can request JVM to run Garbage Collector.
+					--> Both will call the finalize()
+					
+								@Override
+							    protected void finalize() throws Throwable 
+							    { 
+							        System.out.println("Garbage collector called"); 
+							        System.out.println("Object garbage collected : " + this); 
+							    } 
+							    
+							    
+							    
+Avoid Garbage Collection :
+					--> Three types of memory :
+							Heap : Dynamic memory allocation
+							Stack :Memory allocation for local Variables
+							Pool : Un-deletable Objects like strings.
+						
+					Prevent GC :
+						--> By Increasing Heap Memory - java -Xms256m -Xmx2048m 
+						--> By using Singleton Class , Object is of static reference and is at class level, so will service as long as application is alive.
+						--> Using public void finalise() : Finalize is a call-back method (a method called by the JVM, and not by the user), that is last method executed on an object.
+								Override and assign some value to Reference:
+								public void finalise() 
+								    { 
+								        y = this;  //so y will not be eligible for GC
+								     }
+			
+Different ways to create object :
+						--> Using new Keyword : 	Employee obj = new Employee(); 
+						--> Using New Instance : 	Class cls = Class.forName("Employee"); 
+            										Employee obj = (Employee) cls.newInstance();
+            			--> Using clone() method: 	Employee obj1 = new Employee(); 
+            										Employee obj2 = (Employee) obj1.clone(); 		
+            			--> Using deserialization :
+            			--> Using newInstance() method of Constructor class :
+            										Constructor<Employee> constructor = Employee.class.getDeclaredConstructor(); 
+            										Employee r = constructor.newInstance(); 			
+
+
+
+
+
+Inner Classes :
+					Nested Inner class :
+						--> can access all instance variables of outer class including private
+						--> Inner class cannot define static methods.
+					
+					Method Local inner classes:
+						-->Inner class can be declared within a method of an outer class
+					
+					Static nested classes:
+						-->	They are like a static member of outer class.
+					
+					Anonymous inner classes:
+						-->	Anonymous inner classes are declared without any name at all.(Comparator)
+								static Demo d = new Demo() { 
+								       void show() { 
+								           super.show(); 
+								           System.out.println("i am in Flavor1Demo class"); 
+								       } 
+								   }; 
+
+
+
+
+
+code review :
+
+						--> Review around 500 lines of code each time
+						--> Around 500 lines of code per hour.
+						--> Circulate the common coding practices across the team.And they should be followed.
+						--> Cross check of naming conventions and code comments are in place.
+						--> Maintain list of common mistakes made and check for them for the first instance.
+						--> Use tools like SpotBugs and try to realign the code to avoid maximum number of instructions/notifications from the tool.
+
+
+
+function procedure differences :
+
+						--> Functions return value , but procedure may or maynot return.
+						--> Functions usually does not use out parameters which are most commonly used in stored procedures.
+						--> Functions can be used from select,insert,update,delete queries , where as stored procedures should be used form callable statements.
+						--> Functions are used for calculations where as stored procedures are used for data manipulation or business logics.
+						--> we can call Function form stored procedures but vice versa can't be done.
+						--> try/catch can be used in stored procedures but not in functions.
+						
+						
+query tuning points :
+
+						--> Avoid number-to-character conversions ,lead to performance downgrade.
+						--> SELECT statement, only fetch whatever information is required and avoid using * 
+						--> Create your indexes carefully on all the tables where you have frequent search operations.
+						--> Avoid index on the tables where you have less number of search operations and more number of insert and update operations.
+						--> avoid a full-table scan by creating an index on columns that are used as conditions in the WHERE clause of an SQL statement. 
+						--> For queries that are executed on a regular basis, try to use procedures.
+						--> Procedures are compiled by the database engine and then executed.Unlike an SQL statement, the database engine need not optimize the procedure before it is executed.
+						--> in the case of batch loads, you can benefit by dropping the index(es).
+						--> Avoid using the logical operator OR in a query if possible.
+						--> When performing batch transactions, perform COMMIT at after a fair number of records creation in stead of creating them after every record creation.
+						--> Plan to defragment the database on a regular basis,
+
+
+
+Truncate and Delete :
+
+							Truncate									Delete
+							DDL											DML
+							Full Table									Only specific rows
+							No where clause								Where clause
+							Alter permissions							Delete permissions
+							Table lock									only Row lock
+							min logging so fast							full log so slow
+							 
+							
+
+singelton patters - violate and fix :
+
+						--> Reflection:
+								Constructor constructor = Singleton.class.getDeclaredConstructor();
+					            constructor.setAccessible(true);
+					            objTwo = (Singleton) constructor.newInstance();
+					            
+					            Throw Exception from constructor if object exists.
+					            
+					            
+						--> De-serialization :
+								serialize and De-serialize will create a new object.
+								
+								so override readResolve method
+										 protected Object readResolve() { 
+									           return instance; //this will return the smae object
+									     }
+							     
+						--> clone :Clone will create another object of singleton
+									So override clone method and return the exception
+									@Override
+								    protected Object clone() throws CloneNotSupportedException  {
+								        throw new CloneNotSupportedException();
+								    }
+											
+											
+Prototype scope: 		--> A new object is created each time it is injected. Prototype scope is used for all beans that are stateful
+Singleton scope: 		--> The same object is returned each time it is injected. Singleton scope should be used for stateless beans
+
+
+
+
+
+Prototype in singleton :	
+						--> Thus if you dependency-inject a prototype-scoped bean into a singleton-scoped bean, a new prototype bean is instantiated ,
+							then dependency-injected into the singleton bean ,be aware that dependencies are resolved at instantiation time.				
+						--> You cannot dependency-inject a prototype-scoped bean into your singleton bean everytime, 
+							because that injection occurs only once, when the Spring container is instantiating the singleton bean and resolving and injecting its dependencies.
+						
+						
+
+
+						
+HashMap :
+					--> HashMap is key,value pair
+					--> HashMap works on the principle of hashing.
+					--> HashMap key to impliment both equals() and hashcode().
+					--> two equal() Objects will have same hash code.
+					--> two unequal objects may have same hash code
+					
+					new HashMap():
+					--> HashMap created a Array of bucket from 0 to 15
+					--> Each one of them is a node or bucket and will have linkedList to store |hashcode|key|value|address of next node|
+					--> Node is a static inner class of HashMap which have hashcode,key,value , nextNode
+					--> LoadFactor : default for HashMap is .75 .This means if Map is 75% full then the table or array[16] will be doubled in size.
+					--> Threshold : default is 12 , which is 75% of 16 ,This means if the table entries reach 13 then the size is doubled
+					--> We can also create HashMap with initialCapasity : HashMap hm= new HashMAP(32);
+					
+					PUT():
+					--> map.put(key,value) - put method will calculate the hashCode of the key.
+					--> HashMap uses the hash code (121145) of key in its internal hashing function to find the index or the bucket location.This will be form 0 to 15 
+					--> If index is 4 ,then at index 4 of array/table linked list is created.
+					--> |hashcode|key|value|address of next node|  will be stored in the linked list at index 4
+					--> The Next will be null if we don't have the follow up linked list in the bucket/node/linkedlist
+					--> If the key is null , then always its stored in the index 0.	
+					
+					 PUT HashCollision:
+					--> what happens if for another key we got same hashcode and index
+					--> The key/value of both entries need to be stored in same index/bucket, but in different linkedList as:
+								put("abc",1");  hashcode = 12345 , index=4
+					 			put("dcd",2);   hashcode = 12345 , index=4
+					--> Now the first linkedList will store the address of second in the next . |12345|abc|1|address|---->|12345|dcd|2|null|
+					
+					SameKey :
+					--> then the latest put value will be saved :
+							|12345|abc|1|address|  will be updated as |12345|abc|2|address|
+					
+					GET:
+					--> map.get(key)
+					--> First hashCode will be calculated and internal hash Function will return the index of table/array.
+					--> Then it checks at the index for the linked list with the hashCode and then checks the key and then return the value from the linkedlist
+					GET HashCollision:
+					--> If we want to get the value for key with hashCollision,hash and index is computed,then we have two linked lists with this hashcode,Then it uses the equals method to compare the key
+					--> And finds the correct node and finally returns the value
+					
+					
+					 
+					 
+solid principles : 		
+				Single Responsibility Principle
+				Open/Closed principle
+				Lascov's substitution principle
+				Interface seggrigation principle
+				Dependency Inverse principle				
+						
+				
+
+
+				
+				
+						 
+queries
+
+
+
+
+
+
+
+
+
+
+
+ 

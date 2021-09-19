@@ -1,0 +1,131 @@
+
+--> Download form https://www.mongodb.org/downloads
+
+--> Extract to D:\set up\mongodb
+
+--> Setup Data folder : 
+		Default is c:\data\db.
+		MongoDB requires a data folder to store its files , 
+		D:\set up\mongodb\bin>mongod.exe --dbpath "d:\set up\mongodb\data" 
+		
+--> start Mongo DB 
+		D:\set up\mongodb\bin>mongo.exe
+		
+--> from next time to start :
+		D:\set up\mongodb\bin>mongod.exe --dbpath "d:\set up\mongodb\data" 
+		D:\set up\mongodb\bin>mongo.exe 
+		
+		
+--> Create DB :
+		create a new database if it doesn't exist, otherwise it will return the existing database
+		> use DB_NAME
+	
+--> List databases :
+		To display database, you need to insert at least one document into it.
+		> db.movie.insert({"name":"tutorials point"})
+		> show dbs
+		
+		
+--> dropDatabase :
+		> use mydb
+		> db.dropDatabase()
+		
+		
+--> Create Collection :
+		> db.createCollection("mycol", { capped : true, autoIndexId : true, size : 6142800, max : 10000 } )
+		  capped -- data limit of size and max number of documents
+		  
+		  
+--> show collections list :
+		> show collections
+		
+		
+	
+--> Drop collections:
+		> db.mycol.drop()
+		
+		
+--> Insert :
+		>db.mycol.insert([
+					   {
+					      title: 'MongoDB Overview', 
+					      description: 'MongoDB is no sql database',
+					      by: 'tutorials point',
+					      url: 'http://www.tutorialspoint.com',
+					      tags: ['mongodb', 'database', 'NoSQL'],
+					      likes: 100
+					   }])
+   
+   
+   		db.mycol.save(document) will also work same as insert.
+   		db.mycol.save(id,document) will update existing document with id.
+   		
+   
+-->  Query:
+		use find() or findOne()
+		db.mycol.find({"key":"value"}).pretty()		--> where key=value
+		db.mycol.find({"salary":{$lt:50}}).pretty()	--> where salary<50
+		
+		> db.mycol.find({ $and: [ {key1: value1}, {key2:value2} ] }).pretty()
+		> db.mycol.find({ $or: [ {key1: value1}, {key2:value2} ] }).pretty()
+		
+		
+--> Update :
+		To update single document
+		> db.mycol.update({'title':'MongoDB Overview'},{$set:{'title':'New MongoDB Tutorial'}})
+		
+		To update multiple documents, you need to set a parameter 'multi' to true.
+		> db.mycol.update({'title':'MongoDB Overview'},{$set:{'title':'New MongoDB Tutorial'}},{multi:true})
+		
+		> db.mycol.save({
+      					"_id" : ObjectId(5983548781331adf45ec5), "title":"Tutorials Point New Topic",
+      					"by":"Tutorials Point"
+					  })
+
+		
+   
+ --> Delete :
+ 
+			 > db.COLLECTION_NAME.remove(DELLETION_CRITTERIA) -- remove all rows matching criteria
+			 > db.mycol.remove({'title':'MongoDB Overview'})
+			 > db.COLLECTION_NAME.remove(DELETION_CRITERIA,1) -- remove only first row matching criteria
+			 
+			 
+--> Truncate collection:
+			> db.mycol.remove({}) -- remove all documents of collection
+		
+		
+--> Projection :
+		when we query documents then all the fields will be displayed in the list of documents:
+			>db.mycol.find()
+			
+		So to show certail fields and to hide some fields we use values 1 and 0 :
+			> db.mycol.find({},{"title":1,_id:0})  --  so title is displayed and id is hidden
+			
+			
+--> Limit and Skip :
+		Limits the documents from top and skips the documents from top
+		If combined will first skip and then returns the documents as per limit.
+
+
+			> db.COLLECTION_NAME.find().limit(NUMBER).skip(NUMBER)
+			> db.mycol.find({},{"title":1,_id:0}).limit(2)		
+			> db.mycol.find({},{"title":1,_id:0}).limit(1).skip(1)
+
+
+--> Sort :
+		1 is used for ascending order while -1 is used for descending order.
+			> db.COLLECTION_NAME.find().sort({KEY:1})
+			
+			> db.mycol.find({},{"title":1,_id:0}).sort({"title":-1}) --  sorts by title descending	
+			
+			
+--> EnsureIndex :
+		key is the name of the field on which you want to create index and 1 is for ascending order. 
+		To create index in descending order you need to use -1.
+			> db.COLLECTION_NAME.ensureIndex({KEY:1})
+		
+			>db.mycol.ensureIndex({"title":1,"description":-1})
+			
+			
+ 

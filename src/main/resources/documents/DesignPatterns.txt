@@ -1,0 +1,286 @@
+https://www.tutorialspoint.com/design_pattern/front_controller_pattern.htm
+
+1) Factory pattern :
+
+	Factory pattern, we create object without exposing the creation logic to the client
+
+			 public class ShapeFactory {
+				
+			   //use getShape method to get object of type shape 
+			   public Shape getShape(String shapeType){
+			      if(shapeType == null){
+			         return null;
+			      }		
+			      if(shapeType.equalsIgnoreCase("CIRCLE")){
+			         return new Circle();
+			         
+			      } else if(shapeType.equalsIgnoreCase("RECTANGLE")){
+			         return new Rectangle();
+			         
+			      } else if(shapeType.equalsIgnoreCase("SQUARE")){
+			         return new Square();
+			      }
+			      
+			      return null;
+			   }
+			}
+			
+			
+			
+			
+2) Abstract Factory :
+ 	Abstract Factory pattern an interface is responsible for creating a factory of related objects without explicitly specifying their classes.
+ 	
+			 	public class FactoryProducer {
+			   public static AbstractFactory getFactory(boolean rounded){   
+			      if(rounded){
+			         return new RoundedShapeFactory();         
+			      }else{
+			         return new ShapeFactory();
+			      }
+			   }
+			} 
+			
+			
+			
+3) Singleton  :
+	This pattern involves a single class which is responsible to create an object while making sure that only single object gets created.
+	
+			public class SingleObject {
+		
+		   //create an object of SingleObject
+		   private static SingleObject instance = new SingleObject();
+		
+		   //make the constructor private so that this class cannot be
+		   //instantiated
+		   private SingleObject(){}
+		
+		   //Get the only object available
+		   public static SingleObject getInstance(){
+		      return instance;
+		   }
+		
+		   public void showMessage(){
+		      System.out.println("Hello World!");
+		   }
+		}
+		
+
+
+4) Prototype Pattern (CLONE):
+	This pattern involves implementing a prototype interface which tells to create a clone of the current object.
+	
+		public class ShapeCache {
+		   private static Hashtable<String, Shape> shapeMap  = new Hashtable<String, Shape>();
+		
+		   public static Shape getShape(String shapeId) {
+		      Shape cachedShape = shapeMap.get(shapeId);
+		      return (Shape) cachedShape.clone();
+		   }
+		
+		   // for each shape run database query and create shape
+		   // shapeMap.put(shapeKey, shape);
+		   // for example, we are adding three shapes
+		   
+		   public static void loadCache() {
+		      Circle circle = new Circle();
+		      circle.setId("1");
+		      shapeMap.put(circle.getId(),circle);
+		
+		      Square square = new Square();
+		      square.setId("2");
+		      shapeMap.put(square.getId(),square);
+		
+		      Rectangle rectangle = new Rectangle();
+		      rectangle.setId("3");
+		      shapeMap.put(rectangle.getId(), rectangle);
+		   }
+		}
+		
+		
+		
+5) Adapter pattern : 2 Classes 2 Interface
+	This pattern involves a single class which is responsible to join functionalities of independent or incompatible interfaces.
+	
+			public class MediaAdapter implements MediaPlayer {
+		
+		   AdvancedMediaPlayer advancedMusicPlayer;
+		
+		   public MediaAdapter(String audioType){
+		   
+		      if(audioType.equalsIgnoreCase("vlc") ){
+		         advancedMusicPlayer = new VlcPlayer();			
+		         
+		      }else if (audioType.equalsIgnoreCase("mp4")){
+		         advancedMusicPlayer = new Mp4Player();
+		      }	
+		   }
+		
+		   @Override
+		   public void play(String audioType, String fileName) {
+		   
+		      if(audioType.equalsIgnoreCase("vlc")){
+		         advancedMusicPlayer.playVlc(fileName);
+		      }
+		      else if(audioType.equalsIgnoreCase("mp4")){
+		         advancedMusicPlayer.playMp4(fileName);
+		      }  
+		   }
+		}
+		
+		
+		
+6) Filter pattern or Criteria pattern :   
+	design pattern that enables developers to filter a set of objects using different criteria and chaining them in a decoupled way through logical operations
+	
+			public class AndCriteria implements Criteria {
+		
+		   private Criteria criteria;
+		   private Criteria otherCriteria;
+		
+		   public AndCriteria(Criteria criteria, Criteria otherCriteria) {
+		      this.criteria = criteria;
+		      this.otherCriteria = otherCriteria; 
+		   }
+		
+		   @Override
+		   public List<Person> meetCriteria(List<Person> persons) {
+		   
+		      List<Person> firstCriteriaPersons = criteria.meetCriteria(persons);		
+		      return otherCriteria.meetCriteria(firstCriteriaPersons);
+		   }
+		}
+		
+		
+		
+7) Facade pattern :
+	pattern involves a single class which provides simplified methods required by client and delegates calls to methods of existing system classes.
+	
+			public class ShapeMaker {
+		   private Shape circle;
+		   private Shape rectangle;
+		   private Shape square;
+		
+		   public ShapeMaker() {
+		      circle = new Circle();
+		      rectangle = new Rectangle();
+		      square = new Square();
+		   }
+		
+		   public void drawCircle(){
+		      circle.draw();
+		   }
+		   public void drawRectangle(){
+		      rectangle.draw();
+		   }
+		   public void drawSquare(){
+		      square.draw();
+		   }
+		}
+		
+
+
+8) Proxy : 2 Classes 1 Interface
+	Here the ProxyImage implementing Image calls another RealImage implementing Image to use functionality to outer world
+	
+			public class ProxyImage implements Image{
+		
+		   private RealImage realImage;
+		   private String fileName;
+		
+		   public ProxyImage(String fileName){
+		      this.fileName = fileName;
+		   }
+		
+		   @Override
+		   public void display() {
+		      if(realImage == null){
+		         realImage = new RealImage(fileName);
+		      }
+		      realImage.display();
+		   }
+		}
+		
+		
+		
+9)MVC :
+
+		Model - Model represents an object or JAVA POJO carrying data. It can also have logic to update controller if its data changes.
+		
+		View - View represents the visualization of the data that model contains.
+		
+		Controller - Controller acts on both model and view. It controls the data flow into model object and updates the view whenever data changes. It keeps view and model separate.
+
+
+
+
+10) Front Controller :
+
+		The front controller takes the request first and then verifies the Authenticity of user and then Dispatch the request to respective view.
+
+		Front Controller - Single handler for all kinds of requests coming to the application (either web based/ desktop based).
+		
+		Dispatcher - Front Controller may use a dispatcher object which can dispatch the request to corresponding specific handler.
+		
+		View - Views are the object for which the requests are made.
+		
+			public class FrontController {
+				
+			   private Dispatcher dispatcher;
+			
+			   public FrontController(){
+			      dispatcher = new Dispatcher();
+			   }
+			
+			   private boolean isAuthenticUser(){
+			      System.out.println("User is authenticated successfully.");
+			      return true;
+			   }
+			
+			   private void trackRequest(String request){
+			      System.out.println("Page requested: " + request);
+			   }
+			
+			   public void dispatchRequest(String request){
+			      //log each request
+			      trackRequest(request);
+			      
+			      //authenticate the user
+			      if(isAuthenticUser()){
+			         dispatcher.dispatch(request);
+			      }	
+			   }
+			}
+			
+			
+			
+11) PRG :
+
+	Post Redirect Get :
+	In springs a post request will be redirected to a get and the to the final results view.
+	This way if the user refreshes the page only the Get request will be re-executed.
+	
+	
+		@PostMapping("/saveStudentDetails")
+		public ModelAndView saveStudentDetails(@Valid Student student, BindingResult bindingResult, HttpSession session) throws Exception {
+			ModelAndView modelAndView = new ModelAndView();
+			studentFormValidator.validate(student, bindingResult);
+			
+			studentService.addStudent(student); //post login of saving the student details
+			modelAndView.setViewName("redirect:/loadStudentList");// logic to redirect to a Get 
+	
+			return modelAndView;
+		}
+		
+		
+		
+12) IOC :
+		IOC( Inversion Of Control) is achieved by DIP(dependency Inverse Principle)
+		
+		DIP --> Is achieved by abstraction that is with Abstract class /Interfaces .This will allow to hide non essential units of code.
+		
+		@Autowired //injection
+		@Qualifier("datasource1") //Bean retrieved from factory of objects
+		DataSource ds;
+		
+		

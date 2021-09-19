@@ -1,0 +1,38 @@
+user_1:
+{
+  "lastName": "v",
+  "userName": "videoadmin",
+  "password": "test",
+  "temporaryPassword": false,
+  "email": "videoadmin@gmail.com",
+  "role": "Admin",
+  "resort": "All",
+  "documentRoleOptions": [],
+  "requestedSecurityCode": "",
+  "jobs": [
+    "CSM",
+    "ICM"
+  ],
+  "savedViewOptionQty": 10,
+  "systemUser": false,
+  "isQueen": false,
+  "isVideoQueen": false,
+  "id": 283,
+  "name": "videoadmin",
+  "jsonType": "sas_user",
+  "editable": false,
+  "addto": false,
+  "prefix": "user",
+  "lastEdited": "Last edited by: giri Fri Feb 02, 2018 11:41:59 AM EST",
+  "createdDoc": "Created by: giri Fri Feb 02, 2018 11:41:59 AM EST",
+  "createdDate": "Fri Feb 02, 2018 11:41:59 AM EST",
+  "discontinued": false,
+  "productslist": ""
+}
+
+getAllDocs:
+function (doc, meta) {
+  if(doc.jsonType=='sas_user'){
+  emit(meta.id, doc);
+  }
+}

@@ -1,0 +1,411 @@
+
+1) Installation :
+	
+	--> To install Angular 7, we require the following −
+			Nodejs
+			Npm
+			Angular CLI
+			IDE for writing your code
+	
+	
+	--> To check if nodejs is installed on your system, type this in the terminal:
+			node -v 
+
+	--> Install nodejs :
+			https://nodejs.org/en/
+	 	
+	--> Once nodejs is installed, npm will also get installed along with it.To check npm version :
+			 npm –v 
+	
+	--> Angular 7 installations are very simple with the help of angular CLI. 
+			https://cli.angular.io/ 
+
+	--> To install angular cli on your system.Type following command in your command prompt:
+			npm install –g @angular/cli
+
+	--> To display version details of angular - cli as well version of others packages type this in your command prompt :
+			ng version
+
+	--> We are done with the installation of Angular 7. You can use any IDE of your choice, i.e. :
+			 WebStorm, Atom, Visual Studio Code to start working with Angular 7.
+	
+	--> Go to powershell-->open as administrator:
+		PS C:\windows\system32>
+		>> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
+		
+	--> npm install --save-dev @angular-devkit/build-angular
+	
+
+2) New application :
+
+	--> We will create a folder called projectA7 and install angular/cli as shown below	:
+			npm install –g @angular/cli
+			
+	--> Now check details of packeges installed :
+			ng version
+			
+	--> To create a project in Angular 7, we will use the following command :
+			ng new projectname
+			ng new angular7-app
+			
+	--> Select  routing and stylesheet(CSS) 
+	
+	--> The project angular7-app is created successfully.Switch to the project created, which is in the directory angular7-app
+			cd angular7-app
+			
+	--> We will use Visual Studio Code IDE for working with Angular 7, you can use any IDE, i.e., Atom, WebStorm, etc.
+			https://code.visualstudio.com/
+		
+	--> We will consider the angular7-app project. Let us open the angular7-app and see how the folder structure,
+	
+	--> Compile our project with the following command :
+			ng serve
+			
+	--> The ng serve command builds the application and starts the web server.
+		The web server starts on port 4200. Type the url, "http://localhost:4200/" in the browser
+		
+	--> port 4200, which is the default port that angular–cli makes use of while compiling.
+		we can change the port if you wish using the following command :
+			ng serve --open --port=8080
+	
+	
+	
+3) Folder structure−
+
+	--> e2e/ 					:	 end to end test folder. Mainly e2e is used for integration testing and helps ensure the application works fine.
+
+	--> node_modules/ 			:	 The npm package installed is node_modules. You can open the folder and see the packages available.
+
+	--> src/ 					:	 This folder is where we will work on the project using Angular 7.Inside src/ you will app/ folder created during the project setup and holds all the required files required for the project.
+
+	The angular7-app/ folder has the following file structure −
+
+	--> angular.json 			:	 It basically holds the project name, version of cli, etc.
+
+	--> .editorconfig 			:	 This is the config file for the editor.
+
+	--> .gitignore 				:	 A .gitignore file should be committed into the repository, in order to share the ignore rules with any other users that clone the repository.
+
+	--> package.json 			:	 The package.json file tells which libraries will be installed into node_modules when you run npm install.
+
+	src/app :	It contains the files described below. These files are installed by angular-cli by default.
+
+	--> app.component.css 		:	You can write your css over here. Right now, we have added the background color to the div as shown below.
+	--> app.component.html		: 	The html code will be available in this file.
+	--> app.component.ts		:	This will have the selector ,html,css and the actual class to be executed
+	--> app.module.ts			: 	This will group multiple components,directives,pipes,services,RoutingModule associated with this module.
+	-->	app.component.spec.ts	: 	These are automatically generated files which contain unit tests for source component.
+	--> app-routing.module.ts	:	This file will deal with the routing required for your project. It is connected with the main module, i.e., app.module.ts.
+	--> main.ts					:	main.ts is the file from where we start our project development.		
+	
+	Assets	:	You can save your images, js files in this folder.
+
+	Environment	:	This folder has details for the production or the dev environment. The folder contains two files.
+							environment.prod.ts
+							environment.ts				
+							
+					
+					
+4) Components : Components are basically classes that interact with the .html file of the component, which gets displayed on the browser.
+
+	--> The file structure has the app component and it consists of the following files :
+				app.component.css
+				app.component.html
+				app.component.spec.ts
+				app.component.ts
+				app.module.ts
+			
+		And if you have selected angular routing during your project setup, files related to routing will also get added and the files are as follows :
+				app-routing.module.ts
+
+
+	--> open up the app.module.ts file, it has some libraries which are imported and also a declarative :
+	
+				import { BrowserModule } from '@angular/platform-browser'; 
+				import { NgModule } from '@angular/core';
+				import { AppRoutingModule } from './app-routing.module'; 
+				import { AppComponent } from './app.component';
+				
+				@NgModule({ 
+				   declarations: [ 
+				      AppComponent 
+				   ], 
+					
+		AppComponent variable, which we have already imported. This becomes the parent component.
+	
+	
+	-->	Angular-cli has a command to create your own component. 
+				ng g component new-cmp
+		
+		The following files are created in the new-cmp folder −
+				new-cmp.component.css − css file for the new component is created.
+				new-cmp.component.html − html file is created.
+				new-cmp.component.spec.ts − this can be used for unit testing.
+				new-cmp.component.ts − here, we can define the module, properties, etc.
+				
+		Changes are added to the app.module.ts file as follows :
+				@NgModule({ 
+			   	declarations: [
+			      AppComponent, 
+			      NewCmpComponent
+			      // here it is added in declarations and will behave as a child component 
+		   			],  	
+		   			
+		   			
+	--> new-cmp.component.ts :
+			new-cmp.component.ts file, it creates a new class called NewCmpComponent, which implements OnInit in which there is a constructor and a method called ngOnInit().
+		    ngOnInit is called by default when the class is executed.	   	
+		    
+		    Now, the app component, which is created by default becomes the parent component. Any component added later becomes the child component.
+		    
+	--> When we hit the url in the "http://localhost:4200/" browser, it first executes the index.html file :
+					<html lang = "en">
+					   <head> 
+					      <meta charset = "utf-8"> 
+					      <title>Angular7App</title> 
+					      <base href = "/"> 
+					      <meta name = "viewport" content = "width = device-width, initial-scale = 1"> 
+					      <link rel = "icon" type = "image/x-icon" href = "favicon.ico"> 
+					   </head> 
+					   <body> 
+					      <app-root></app-root>
+					   </body> 
+					</html>    
+		    
+		    
+	--> app.module.ts :
+		AppComponent is the name given, i.e., the variable to store the reference of the app.component.ts and the same is given to the bootstrap.    
+					 @NgModule({ 
+					   declarations: [
+					      AppComponent, 
+					      NewCmpComponent 
+					   ],
+					   imports: [ 
+					      BrowserModule, 
+					      AppRoutingModule '
+					   ], 
+					   providers: [], 
+					   bootstrap: [AppComponent] 
+					})
+					export class AppModule { }
+		 
+	--> app.component.ts :
+				import { Component } from '@angular/core';
+				@Component({
+				   selector: 'app-root', 
+				   templateUrl: './app.component.html', 
+				   styleUrls: ['./app.component.css'] 
+				}) 
+				export class AppComponent { 
+				   title = 'Angular 7'; 
+				}    
+		    
+		    selector: 'app-root',  is nothing but the tag "<app-root></app-root>" which is placed in the index.html file that we saw above.
+		    
+	--> app.component.html :
+				<!--The content below is only a placeholder and can be replaced.--> 
+				<div style = "text-align:center"> 
+				   <h1> Welcome to {{ title }}! </h1> 
+				</div>
+		    
+		   The variable title in curly brackets. It gets replaced with the value, which is present in the app.component.ts file. " title = 'Angular 7'; "
+		   
+		   
+	--> new-cmp.component.ts : 
+			import { Component, OnInit } from '@angular/core';
+			@Component({
+			   selector: 'app-new-cmp',
+			   templateUrl: './new-cmp.component.html',
+			   styleUrls: ['./new-cmp.component.css']
+			})
+			export class NewCmpComponent implements OnInit {
+			   newcomponent = "Entered in new component created";
+			   constructor() { }
+			   ngOnInit() { }
+			}
+			
+			
+	--> new-cmp.component.html :
+	
+			<p> 
+			   {{newcomponent}} 
+			</p>
+			<p> 
+			   new-cmp works! 
+			</p>
+		    
+		    
+	--> new-cmp.component.css :
+			p { 
+			   color: blue; 
+			   font-size: 25px; 
+			}
+			
+			
+	--> Finally hit the url in the "http://localhost:4200/" browser.
+	
+	
+5) Modules :
+	Module in Angular refers to a place where you can group the components, directives, pipes, and services, which are related to the application.			
+	In case you are developing a website, the header, footer, left, center and the right section become part of a module.
+	To define module, we can use the NgModule.
+			import { NgModule } from '@angular/core';
+			@NgModule({
+		   declarations: [
+		      AppComponent,
+		      NewCmpComponent
+		   ],
+		   
+	
+	
+6) 	Quick points for setup:
+
+	Install nodejs : https://nodejs.org/en/
+	check nodejs version :	node -v 
+	check npm version : npm –v 
+	install angular cli : npm install –g @angular/cli
+						  npm install -g @angular/cli@9
+						  
+	Install cdk : this will help in the infinite virtual scroll :  npm install --save @angular/material @angular/cdk
+						  
+	install bootstrap and jquery : npm install bootstrap@3 jquery --save
+	configure jquery/bootstrap in cli : modify angular.json
+		"styles": [
+              "src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
+            ],
+         "scripts": [
+         		"node_modules\jquery\dist\jquery.min.js",
+         		"node_modules\bootstrap\dist\js\bootstrap.min.js"
+         ]
+          },
+							
+	QA :
+	
+	1) Tell me about your self.
+	2) Have you worked on restful webservices.
+	3) Collection Arraylist and Hashmap - linked Hashmap ,Hashset
+	3) Exception Handling
+	4) Logging
+	4) Explain process to setup Angular development environment.Tell what needs to be installed
+	5) Command to compile and start angular.
+	6) Start angular in a specific port.
+	6) Create component, module, service.
+	7) How you interact with the restful from angulat HTTPclient.
+	8) Directives and pipes
+	9) How to include another template/component
+	10) Header with routing
+	11) Session management
+	12) (model)Reactive work in componet  and template (work in template)  based forms
+	14) How to run angular in external tomcat.
+	
+	Use 'ng build –-prod' command for generating production build artifacts.
+	use 'ng build --prod --base-href=AngularSprings
+	Post generation of the production build you should see a new folder named ‘dist’.
+	Now just create a folder ROOT in Tomcat webapp directory and copy all contents fo 'dist' folder of AngularSprings application.
+	Run  AngularSprings application at  : http://localhost:8080/login
+	
+	
+	npm - Node Package Manager
+	ng - Angular
+	
+	{path:"**",redirectTo:"/login",pathMatch:"full"}
+	
+	
+	@input
+	@output
+	viewChild
+	
+	localsession 
+	
+	localstoarge 
+	
+	
+	store logi token
+	localstorage.setItem("key",value);
+	
+	Interseptor http 
+	
+	error interseptor
+	
+	
+	angular version :	ng version
+	create a project : ng new Angular1
+	Compile our project : ng serve
+	Change port :	ng serve --open --port=8080
+	Install visualStudio and add following in system variable path : add %AppData%\npm and %ProgramFiles%\nodejs\ at top of the list 8 click on ok. ok. ok   
+	Issue with ng in visualStudiocode Terminal : Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+	Turn Anonymous data off : ng analytics off
+	New component : ng g component new-cmp
+	Include new html : Add <app-new-cmp></app-new-cmp> in the app.component.html
+	New Directive : ng g directive changeText 
+	Include directive : <p appChangeText>new-cmp works!</p>
+	New pipe : Create  new class and import Pipe, PipeTransform
+	Include pipe : <p>Square root of 25 is {{25 | sqrt}}</p>
+	New Service : ng g service myservice
+				  ng generate service service/httpClient
+				  
+    New Class : ng g class Student
+    
+    Install cdk : npm install --save @angular/material @angular/cdk
+	
+	
+	include <app-root></app-root> in index.html , this will be the base template.
+	include <app-new-cmp></app-new-cmp> , in the app.component.html , this will be the footer.
+	include <router-outlet></router-outlet> in app.componet.html , this will be the header and the navigation links.
+		
+		
+7) Integrate Angular and Spring in single application:
+	Import from Projects option to export angular application into STS.
+	On project settings exclude node_modules folder & click on apply.
+	Run 'npm start' to start angular and check http://localhost:4200
+	create a file “proxy.conf.json” :
+			{
+				"/api" :
+				{
+					"target" : "https://localhost:8443",
+					"secure" : false
+				}
+			}
+	Modify the start script to "start": "ng serve --proxy-config proxy.conf.json" in package.json 
+	use all urls to restapi as  : public static apiLoginCheckurl = "/api/student/loginCheck";
+	restart the server using the “npm start” command.Now all api requests will automatically redirected to https://localhost:8443
+	
+	
+	Run in External Tomcat server:
+	Use 'ng build –-prod' command for generating production build artifacts.
+	use 'ng build --prod --base-href=AngularSprings
+	Post generation of the production build you should see a new folder named ‘dist’.
+	Now just create a folder ROOT in Tomcat webapp directory and copy all contents fo 'dist' folder of AngularSprings application.
+	Run  AngularSprings application at  : http://localhost:8080/login
+	
+	Now we have both static sources (angular application) dist folder & Spring Boot artifacts.
+	The next step is to use a maven resource plugin to copy all files from dist folder to /src/main/resources/static the folder to Spring Boot Project. 
+			<plugin> 
+		        <artifactId>maven-resources-plugin</artifactId>     
+		    	<executions>  
+		          <execution>   
+		                       <id>copy-resources</id>    
+		                      <phase>validate</phase> 
+		                         <goals><goal>copy-resources</goal></goals>             
+		             <configuration>                                 
+		  				 <outputDirectory>${build.directory}/classes/static/</outputDirectory >      
+		                 <resources>    
+			                 <resource>       
+			                      <directory>../AngularSprings/dist</directory> 
+			                  </resource>   
+		                  </resources>   
+		             </configuration>        
+		          </execution>   
+		       </executions> 
+		    </plugin>
+	On Maven clean build, you should see a jar with both Angular 6 & Spring Boot application on the target folder.
+	Now run http://localhost:8080
+	
+
+	
+	npm - Node Package Manager
+	ng - Angular
+	
+	   
+		   

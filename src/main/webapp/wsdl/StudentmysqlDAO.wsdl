@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://dao.app.student.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://dao.app.student.com" xmlns:intf="http://dao.app.student.com" xmlns:tns1="http://model.app.student.com" xmlns:tns2="http://model.couchbase.app.student.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://dao.app.student.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://model.couchbase.app.student.com"/>
+   <import namespace="http://model.app.student.com"/>
+   <element name="getAllStudents">
+    <complexType/>
+   </element>
+   <element name="getAllStudentsResponse">
+    <complexType>
+     <sequence>
+      <element name="getAllStudentsReturn" type="xsd:anyType"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getStudent">
+    <complexType>
+     <sequence>
+      <element name="id" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getStudentResponse">
+    <complexType>
+     <sequence>
+      <element name="getStudentReturn" type="tns1:Student"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deleteStudent">
+    <complexType>
+     <sequence>
+      <element name="id" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deleteStudentResponse">
+    <complexType/>
+   </element>
+   <element name="UpdateStudent">
+    <complexType>
+     <sequence>
+      <element name="student" type="tns1:Student"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="UpdateStudentResponse">
+    <complexType/>
+   </element>
+   <element name="addStudent">
+    <complexType>
+     <sequence>
+      <element name="student" type="tns1:Student"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addStudentResponse">
+    <complexType/>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://model.couchbase.app.student.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://model.app.student.com"/>
+   <complexType name="ConcreteDocument">
+    <sequence>
+     <element name="addTo" type="xsd:boolean"/>
+     <element name="addedBy" nillable="true" type="xsd:string"/>
+     <element name="createdDate" nillable="true" type="xsd:string"/>
+     <element name="createdDoc" nillable="true" type="xsd:string"/>
+     <element name="discontinued" type="xsd:boolean"/>
+     <element name="editable" type="xsd:boolean"/>
+     <element name="jsonType" nillable="true" type="xsd:string"/>
+     <element name="lastDiscontinued" nillable="true" type="xsd:string"/>
+     <element name="lastEdited" nillable="true" type="xsd:string"/>
+     <element name="prefix" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://model.app.student.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://model.couchbase.app.student.com"/>
+   <complexType name="Student">
+    <complexContent>
+     <extension base="tns2:ConcreteDocument">
+      <sequence>
+       <element name="acceptForm" nillable="true" type="xsd:string"/>
+       <element name="address" nillable="true" type="xsd:string"/>
+       <element name="age" nillable="true" type="xsd:string"/>
+       <element name="country" nillable="true" type="xsd:string"/>
+       <element name="gender" nillable="true" type="xsd:string"/>
+       <element name="id" type="xsd:long"/>
+       <element name="name" nillable="true" type="xsd:string"/>
+       <element name="phone" nillable="true" type="xsd:string"/>
+       <element name="standard" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="addStudentRequest">
+
+      <wsdl:part element="impl:addStudent" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addStudentResponse">
+
+      <wsdl:part element="impl:addStudentResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllStudentsResponse">
+
+      <wsdl:part element="impl:getAllStudentsResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getStudentResponse">
+
+      <wsdl:part element="impl:getStudentResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="UpdateStudentResponse">
+
+      <wsdl:part element="impl:UpdateStudentResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllStudentsRequest">
+
+      <wsdl:part element="impl:getAllStudents" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getStudentRequest">
+
+      <wsdl:part element="impl:getStudent" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteStudentResponse">
+
+      <wsdl:part element="impl:deleteStudentResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="UpdateStudentRequest">
+
+      <wsdl:part element="impl:UpdateStudent" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteStudentRequest">
+
+      <wsdl:part element="impl:deleteStudent" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="StudentmysqlDAO">
+
+      <wsdl:operation name="getAllStudents">
+
+         <wsdl:input message="impl:getAllStudentsRequest" name="getAllStudentsRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getAllStudentsResponse" name="getAllStudentsResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getStudent">
+
+         <wsdl:input message="impl:getStudentRequest" name="getStudentRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getStudentResponse" name="getStudentResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteStudent">
+
+         <wsdl:input message="impl:deleteStudentRequest" name="deleteStudentRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:deleteStudentResponse" name="deleteStudentResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="UpdateStudent">
+
+         <wsdl:input message="impl:UpdateStudentRequest" name="UpdateStudentRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:UpdateStudentResponse" name="UpdateStudentResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addStudent">
+
+         <wsdl:input message="impl:addStudentRequest" name="addStudentRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:addStudentResponse" name="addStudentResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="StudentmysqlDAOSoapBinding" type="impl:StudentmysqlDAO">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getAllStudents">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllStudentsRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllStudentsResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getStudent">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getStudentRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getStudentResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteStudent">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="deleteStudentRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="deleteStudentResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="UpdateStudent">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="UpdateStudentRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="UpdateStudentResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addStudent">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addStudentRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addStudentResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="StudentmysqlDAOService">
+
+      <wsdl:port binding="impl:StudentmysqlDAOSoapBinding" name="StudentmysqlDAO">
+
+         <wsdlsoap:address location="http://localhost/StudentCBThymeLeaf/services/StudentmysqlDAO"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

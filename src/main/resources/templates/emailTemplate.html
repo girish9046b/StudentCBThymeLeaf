@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      >
+<head>
+    <title>studentslist</title>
+    </head>
+<body>
+<div class="loginHeader"><span   th:text="Welcome"></span> 
+                         <span  th:text="${login.userName}" id="loginUserName"></span>
+                         
+                    
+            </div>
+	<table th:id="studentlisttable">
+		<thead>
+			<tr>
+				<th th:id="studentlistth">ID</th>
+				<th th:id="studentlistth">Name</th>
+				<th th:id="studentlistth">Age</th>
+				<th th:id="studentlistth">phone</th>
+				<th th:id="studentlistth">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+
+				<tr th:each="student : ${studentslist}" th:id="'studentRow_'+${student.id}">
+					<td th:id="studentlisttd" th:text="${student.id}"></td>
+					<td th:id="studentlisttd" th:text="${student.name}"></td>
+					<td th:id="studentlisttd" th:text="${student.age}"></td>
+					<td th:id="studentlisttd" th:text="${student.phone}"></td>
+					<td th:id="studentlisttd"><a class="editStudent" th:id="${student.id}">
+							<img th:src="@{/img/edit.png}" alt="Edit Student Details"/>
+						</a> 
+						<a class="delStudent" th:id="${student.id}">
+							<img th:src="@{/img/delete.png}" alt="Delete Student Details"/>
+						</a>
+					</td>
+				</tr>
+		</tbody>
+	</table>
+
+<div id="myModal"  class="modal">
+		<span class="close cursor" id="closeModal" >&times;</span>
+		<div class="modal-content" id="modal-content"></div>
+	</div>
+
+</body>
+</html>

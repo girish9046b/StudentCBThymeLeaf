@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://dao.app.student.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://dao.app.student.com" xmlns:intf="http://dao.app.student.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://dao.app.student.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="getNAME">
+    <complexType/>
+   </element>
+   <element name="getNAMEResponse">
+    <complexType>
+     <sequence>
+      <element name="getNAMEReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="getNAMERequest">
+
+      <wsdl:part element="impl:getNAME" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getNAMEResponse">
+
+      <wsdl:part element="impl:getNAMEResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="StudentmysqlWSDAO">
+
+      <wsdl:operation name="getNAME">
+
+         <wsdl:input message="impl:getNAMERequest" name="getNAMERequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getNAMEResponse" name="getNAMEResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="StudentmysqlWSDAOSoapBinding" type="impl:StudentmysqlWSDAO">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getNAME">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getNAMERequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getNAMEResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="StudentmysqlWSDAOService">
+
+      <wsdl:port binding="impl:StudentmysqlWSDAOSoapBinding" name="StudentmysqlWSDAO">
+
+         <wsdlsoap:address location="http://localhost/ROOT/services/StudentmysqlWSDAO"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

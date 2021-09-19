@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>addStudent</title>
+    
+	<script type="text/javascript" th:src="@{/resources/js/postrequest.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/css/student.css}"/>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+<div class="row">
+<div class="col-md-6 col-md-offset-3">
+            <h1>Login page</h1>
+<form th:action="@{/saveStudent}"  th:object="${student}"  method="post" id="form">
+<table>
+		<tr class="form-group">
+			<td><label for="name">Name</label>:</td>
+			<td> <input type="text"
+                           id="name"
+                           name="name"
+                           th:field="*{name}"
+                           class="form-control"
+                           autofocus="autofocus"
+                           placeholder="name">
+                           </td>
+                <td><div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" Class="errorValidation"></div></td>
+		</tr>
+		<tr class="form-group">
+			<td><label for="id">Id</label>:</td>
+			<td> <input type="text"
+                           id="id"
+                           name="id"
+                           th:field="*{id}"
+                           class="form-control"
+                           placeholder="id">
+                           </td>
+                <td> <div th:if="${#fields.hasErrors('id')}" th:errors="*{id}" Class="errorValidation"></div></td>
+		</tr>
+		<tr class="form-group">
+			<td><label for="age">Age</label>:</td>
+			<td>  <input type="text"
+                           id="age"
+                           name="age"
+                           th:field="*{age}"
+                           class="form-control"
+                           placeholder="age">
+                           </td>
+                <td> <div th:if="${#fields.hasErrors('age')}" th:errors="*{age}" Class="errorValidation"></div></td>
+		</tr>
+		<tr class="form-group">
+			<td><label for="phone">Phone</label>:</td>
+			<td> <input type="text"
+                           id="phone"
+                           name="phone"
+                           th:field="*{phone}"
+                           class="form-control"
+                           placeholder="phone">
+                           </td>
+                <td>  <div th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" Class="errorValidation"></div></td>
+		</tr>
+		<tr class="form-group">
+			<td><label for="country">Country</label>:</td>
+			<td> <select class="form-control" aria-describedby="status-addon" id="country" name="country" th:field="*{country}">     
+                 <option  th:value="NONE" th:text="Select" ></option>
+                 <option th:each="dropdownValue: ${countryList}" th:value="${dropdownValue.key}" th:text="${dropdownValue.value}" ></option>
+                </select>
+                </td>
+                <td>  <div th:if="${#fields.hasErrors('country')}" th:errors="*{country}" Class="errorValidation"></div></td>
+		</tr>
+		
+		<tr class="form-group">
+			<td><label for="gender">Gender</label>:</td>
+			<td>  Male<input type="radio" 
+                 			id="gender"
+                           name="gender"
+                           th:field="*{gender}"
+                           placeholder="gender"
+        					th:value="M"  />
+        					 Female<input type="radio" 
+                 			id="gender"
+                           name="gender"
+                           th:field="*{gender}"
+                           placeholder="gender"
+        					th:value="F" />
+                </td>
+                <td>  <div th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}" Class="errorValidation"></div></td>
+		</tr>
+		
+		<tr class="form-group">
+			<td><label for="standard">Standard</label>:</td>
+			<td >
+			<span th:each="standardValue: ${standardList}">
+		    <input type="checkbox" 
+                    	name="standard"
+		        		th:field="*{standard}"
+                        placeholder="standard"
+		        		th:value="${standardValue}"
+		        		th:text="${standardValue}" />
+		        		</span>
+   			</td>
+                <td>  <div th:if="${#fields.hasErrors('standard')}" th:errors="*{standard}" Class="errorValidation"></div></td>
+		</tr>
+		<tr class="form-group">
+			<td><label for="address">Address</label>:</td>
+			<td> <textarea 
+                           id="address"
+                           name="address"
+		        			th:field="*{address}"
+                           class="form-control"
+                           placeholder="address"></textarea>
+                           </td>
+                <td>  <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" Class="errorValidation"></div></td>
+		</tr>
+		
+		<tr class="form-group">
+			<td><label for="acceptForm">Accept the details submitted are correct</label>:</td>
+			<td >
+		    <input type="checkbox" 
+                    	name="acceptForm"
+		        		th:field="*{acceptForm}"
+                        placeholder="acceptForm"
+		        		th:value="Y" />
+   			</td>
+                <td>  <div th:if="${#fields.hasErrors('acceptForm')}" th:errors="*{acceptForm}" Class="errorValidation"></div></td>
+		</tr>
+		
+		<tr class="form-group">
+			<td> <div class="row">
+                        <div >
+                            <input type="button"
+                                   name="student-submit"
+                                   id="student-submit"
+                                   class="form-control btn btn-info updateButton"
+                                   value="Update">
+                        </div>
+                    </div>
+                </td>
+		</tr>
+		</table>
+		
+               <br>
+	
+</form>
+ </div>
+</div>
+</div>
+</body>
+</html>

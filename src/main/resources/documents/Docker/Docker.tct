@@ -1,0 +1,298 @@
+
+practice :
+kodekloud.com/p/docker-labs
+
+
+Docker Introduction :
+When we have different applications and corresponding dependencies used at different environment/OS then few of them may not work for the same OS.
+So Docker come into picture to handle the setup , development, shipping and deploying all these applications with out any issues.
+Docker will have its own container with the libraries/dependencies	which will be compatable for  each of the applications on the different OS/environment.
+We can modify the components and underlying OS to make all applications work.
+With Docker we will be able to run each component is a separate container with the respective dependencies.
+So with Docker , we just need to build the docker configuration once .
+From there on all developers need to run the simple docker Run command irrespective of the underlying OS they use on different machines.
+Docker use LXC containers .
+OS will mainly have two components OS-KERNAL(Interact with hardware) and SOFTWARES.
+OS-KERNAL will remain same for all OS.
+But the OS software which provide different user interface will change.
+Docker is to package , and containerize applications and ship then to run as main time as we want.
+
+VM vs DOCKER :
+Virtual machines have OS for each application ,they consume more disk space in GB and also need  more time to bootup as the whole OS need to restart.
+Docker will not have OS for each application ,they consume less disk space in MB and also need to less time to bootup .
+Containers are running instances of Image.
+Now instead of using a VM for each application , we use a VM for multiple Containers/application.
+If a instance fails , then simply destroy and create a new container.
+
+
+DevOps :
+Previously we use to share the .war file and the document file to other developers or production support(operations).
+Not with Docker we share the .war file and docker file which can be combined as a docker image.
+This image can now run on any host with docker installed on it.
+Now since the developer and Production operations  combine with the dockerImage we call it DevOps
+
+
+Setup:
+Docker is available for different OS( windows,mac,linux..)
+Download docker.
+Double-click Docker for Windows Installer to run the installer.
+Run docker version to check the version.
+Run docker run hello-world to verify that Docker can pull and run images.
+
+Docker Basic Commands :
+docker version - find teh version of docker running
+docker run mongodb - will run a instance from a image .
+docker run mongodb sleep 5 -  will start mongodb and sleep for 5 sec
+For the first time if image is not present docker host it downloads from the hub.
+docker ps - check the list of containers
+docker ps - a .list of all containers, even previously run and stopped
+docker stop name/containerid  - to stop a running container.
+docker rm name/containerid  - remove a container ,  first stop the container and then remove the container
+
+the images which we download form the hub may not be used any more so we may need to remove teh image.
+docker images - see list of all images
+docker rmi name -  remove an image. Prior to removing image we should stop and remove all docker containers of this image.
+docker pull name - used to download the image and not run.
+docker run --name 'containername' 'imagename'  ---> this will run a docker image and create a container with name of our choice
+
+
+RUN COMMANDS:
+docker run redis --> will run the latest version of redis
+docker run redis:4.0  --> will run tr redis version 4.0 , here 4.0 is the tag , docker pulls the image of version 4.0 and run
+Find the available versions of images at dockerhub.com
+docker run app  --> will run the application app
+docker run -i app  -> will accept the input and run the app
+docker run -it app -- > will be marked as zero terminal , so we will get the prompt to enter input and then will provide respective output
+
+PORT MAPPING :
+with docker port mapping we can map the docker host ip/port to the docker container ip/port
+We can run multiple instances of application or images on different ports.
+
+docker run -p 3306:3306 mysql
+docker run -p 8443:3306 mysql
+Always run with the docker host ip because docker container ip is internal
+To fine number of ports public use docker ps and then check the ports coulmn
+
+to run container on port mapping 38282 from 8080 and appname blue-app with environment variable APP_COLOR=blue for image kodekloud/simple-webapp
+docker run -p 38282:8080 --name blue-app -e APP_COLOR=blue kodekloud/simple-webapp
+
+
+DATA BACKUP :
+If we have two mysql containers where the data is stored with in the containers /var/lib/mysql
+Then if we remove the containers , then the data is also lost.
+so to back up the data we need to map the data from the container to external folder of the docker host  as :
+docker run -v /opt/sqlbackup:/var/lib/mysql mysql    --> this way the backup is maintained at /opt/sqlbackup
+Now even if we remove all the instances/containers of my sql the data still persists
+
+
+
+LOGS:
+docker logs mysql
+
+
+Environment Variables:
+docker run -e evn=pros springsapp
+docker run -e env-stag springsapp
+to check the environment variables set on a container just inspect the container
+docker inspect ImageName/containerName  -- > will give the conplete details of the image or container 
+docker inspect springsapp    --> now under the config check the env, you can find the list of environment variables 
+Strat contained with name mysql-db of image mysql and set environment variable for password
+$ docker run -e MYSQL_ROOT_PASSWORD=db_pass123 --name mysql-db mysql
+
+IMAGES :
+We will containerize our own image , if we dont find the images in the docker hub or if we want to ship our own application and run as many time as we like in different environment.
+
+Creating docker file :
+All docker files will start with FROM instruction
+instructions : FROM, RUN COPY ,ENTRYPOINT
+arguments will be on the right of instruction.
+
+Each instruction in docker file will create a different layed for the image created
+You can check the layers of the image with  : docker history imagename
+So only the layers which need to be updated will be rebuild.For example if the code is updated then the war creation instruction will only be updated for the entire image.
+So from here on no need to install any thing, Just use docker to create container of the images and latter you can cleanup/remove if not required easily.
+You can also containerize even browsers, applications, databases...
+EntryPoint is command used to run the application in the docker file.
+Build a docker image using docker file : docker build -t webapp-color
+
+
+
+COMMAND :
+Create a docker file 'mysql-sleep' : we are creating a image from the base mysql image by adding extra command to sleep for 5 sec.
+FROM mysql
+CMD sleep 5
+
+run image and sleep for 5 sec before exiting  : 
+docker run mysql-sleep
+run image and sleep for 10 sec before exiting : 
+docker run mysql-sleep sleep 10
+
+Here we need to pass the entire command sleep 10 to over ride the existing command
+
+
+so we use the Entry point to pass only value to the command
+
+FROM mysql
+ENTRYPOINT ["sleep"]
+
+run image and sleep for 10 sec before exiting : docker run mysql-sleep 10
+run image and sleep for 5 sec as default and can be overriden before exiting :docker run mysql-sleep 10
+FROM mysql
+ENTRYPOINT ["sleep"]
+CMD ["5"]
+
+we can override the command in the ENTRYPOINT and value in the CMD :
+docker run --entrypoint sleep2.0 mysql-sleep 20
+
+So after running the image it executes the command sleep2.0 for 20 sec
+
+
+DETACHED MODE:
+runns in background :  docker run -d ubuntu sleep 1000
+
+
+
+
+
+Deploy spring boot through Docker
+--> Install docker in the machine : yum install docker
+--> start docker : systemctl start docker
+--> docker status  : systemctl status docker
+
+
+--> create docker file 'Dockerfile'
+		Go to dockerhub to check the tomcat images and version/tag
+
+--> Dockerfile:
+		From tomcat:8.0.51-jre8-alpine
+		CMD ["catalina.sh","run"]
+
+
+--> Now open the terminal and go to the Spring Boot project folder.Next we will build an image with the name producer.
+		docker image build -t employee-producer .
+
+--> No we have the container employee-producer ready,Let us run the container :
+		docker container run -d employee-producer
+
+Here we have started the container. Now using the following command check the logs
+docker container logs containerID
+
+
+
+Again run the image as a container but this time using the publish command where we link the docker internal port 8080 to external port 8080, so that it can be accessed externally.
+docker container stop containerID
+
+go inside the docker and investigate it using the docker exec command.-it is interactive mode
+docker container exec -it containerID /bin/sh
+ls -la
+cd webapps
+check the projects present , now we need to add out project(copy war) in webapps folder
+
+
+We will need to copy our WAR file in the webapps folder of the tomcat inside the docker. This we will do it adding commands to the docker file.
+From tomcat:8.0.51-jre8-alpine
+MAINTAINER GIRISH <GIRISH9046@GMAIL.COM>
+RUN rm -rf /usr/local/tomcat/webapps/*
+COPY ./target/employee-producer-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
+CMD ["catalina.sh","run"]
+docker container run -p 8080:8080 -d employee-producer
+
+Now stop the docker container we had previously started.
+docker container stop containerID
+
+Again build the image, and start the container:
+docker build -t micro-service:1.0 .
+docker images
+docker run micro-service:1.0/imageID
+docker container run -p 8080:8080 -d employee-producer
+
+
+----------------------------FINAL-------------------------------
+---> deploy war file using docker:
+		1) Create Dockerfile :
+				From tomcat:8.0.51-jre8-alpine    ///if only java FROM openjdk:8
+				MAINTAINER GIRISH<GIRISH9046@GNAIL.COM>
+				EXPOSE 8080
+				RUN rm -rf /usr/local/tomcat/webapps/*
+				COPY ./target/employee-producer-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
+				CMD ["catalina.sh","run"]
+				
+		2) create image form the Dockerfile :
+		   Navigate to Dockerfile directory and execute following command (file -f tag -t):
+				docker build -f Dockerfile -t spring-boot-app .
+		
+		3) Check if image is created - display the images list and check:
+				docker images
+		
+		4) Run the image and push the application(push -p) :
+		   so the springboot application will be up and running on 8080.  
+				docker run -p 8080(required  port):8080(tomcat container port) spring-boot-app
+		
+		
+		5) if there are any changes in the code , then we just need to rebuild the image.
+
+
+
+
+--> In above scenario the war file is already created from teh eclipse and that is copied to Tomcat webapp location.
+	Now we will include maven build/package/install , so that the war file will be created and then copied to tomcat directory:
+	
+	1) Create Dockerfile :
+	
+			FROM maven:3.6.3-jdk-8-alpine AS MAVEN_TOOL_CHAIN
+			MAINTAINER GIRISH<GIRISH9046@GNAIL.COM>
+			WORKDIR /opt\JOB_2020\LOCAL\STS_WORKSPACE\MicroService1
+			RUN mvn install
+			FROM tomcat:8.0.51-jre8-alpine    ///if only java FROM openjdk:8
+			EXPOSE 8080
+			RUN rm -rf /usr/local/tomcat/webapps/*
+			COPY /opt\JOB_2020\LOCAL\STS_WORKSPACE\MicroService1/target/CLIENT1.war /usr/local/tomcat/webapps/CLIENT1.war
+			CMD ["catalina.sh","run"]
+	
+		
+	2) Build image form Dockerfile:
+			docker build -f Dockerfile -t spring-boot-app
+		
+	3) Check list of images :
+			docker images
+		
+	4) Run the image and push the application(push -p) :
+			docker run -p 8080:8080 spring-boot-app
+	
+	5) Run the image and push the application with the datasources ,ssl, gui-manager user in server.xml and tomcat-users.xml
+	   For this we need to replace the existing server.xml and tomcat-users.xml in tomcat /conf directory with our own files (volume -v)
+			docker run -d --name springbootapp-one(containerName) 
+			-v /home/girish/conf server.xml:/opt/tomcat/conf/server.xml 
+			-v /home/girish/conf tomcat-users.xml:/opt/tomcat/conf/tomcat-users.xml -p 8080:8080 spring-boot-app(imageName)
+			
+	6) To create second instance/container of the spring-boot-app as springbootapp-two :
+			docker run -d --name springbootapp-two(containerName) 
+			-v /home/girish/conf server.xml:/opt/tomcat/conf/server.xml 
+			-v /home/girish/conf tomcat-users.xml:/opt/tomcat/conf/tomcat-users.xml -p 8080:8080 spring-boot-app(imageName)
+			
+	6) Check the Containers :
+			docker ps -a
+			
+	7) If there are any changes in the code , then we just need to rebuild the image from the Dockerfile , and then remove/create the containers.
+			docker stop springbootapp-one(containerID)
+			docker rm springbootapp-one(containerID)
+			docker rmi name -  remove an image.
+			
+	7) Now these two containers can be load balanced by using Ngnix
+	
+	8) Skip tests : mvn -Dmaven.test.skip=true package
+	   build offline : mvn -o install
+	   mvn -o -Dmaven.test.skip=true package
+
+
+Install docker on windows :
+https://www.youtube.com/watch?v=ymlWt1MqURY
+
+Install docker : you will get the docker shortcut , Oracle VM ,kITEMATIC.
+Now modify the docker start.sh
+In windows firewall , inbound --> add the IP of your machine as docker ip.
+Now enable the virtuilixzation . from windows settings-->update security -->advanced startup -->bios settings and enable virtuilization
+
+Deploy springboot mysql todocker
+--> we will have two containers one for springboot application and other for the myswl
+--> They both will be interacting through the docker networking.

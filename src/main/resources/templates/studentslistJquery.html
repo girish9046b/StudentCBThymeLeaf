@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script>
+$(document).ready(function() {
+	
+$('#loadStudents').click(function(event) {
+	alert("loadStudents");
+	$.ajax({
+		method : 'get',
+		dataType : 'json',
+		url : "https://localhost:8443/api/student/allstudents",
+		success : function(result) {
+			alert(result[2].name);
+			var htable="";
+			$.each(result, function(i, student) {
+
+				alert(student.name);
+				
+				 $("#studentlisttable").append("<tr><td>" + student.id + 
+						 "</td><td>" + student.name + 
+						 "</td><td>" + student.age + 
+						 "</td><td>" + student.phone + 
+						 "</td><td><a class='editStudent' th:id='${student.id}'><img th:src='@{/resources/img/edit.png}' alt='Edit Student Details'/></a>'</td></tr>") ; 
+               // alert(htable);
+                
+                
+				
+            });
+		},
+		error : function(e) {
+			alert(e);
+		},
+		done : function(e) {
+			alert("done");
+			console.log("DONE");
+		}
+	});
+}); 
+
+});
+</script>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+<input id="loadStudents" type="button" value="clickkk"/>
+
+<table id="studentlisttable">
+			<tr>
+				<th th:id="studentlistth">ID</th>
+				<th th:id="studentlistth">Name</th>
+				<th th:id="studentlistth">Age</th>
+				<th th:id="studentlistth">phone</th>
+				<th th:id="studentlistth">Action</th>
+			</tr>
+	</table>
+</div>
+</body>
+</html>

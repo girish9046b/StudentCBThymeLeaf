@@ -1,0 +1,39 @@
+h1 {
+    color: #78ab46;
+}
+
+footer {
+    position: fixed;
+    height: 50px;
+    bottom: 0;
+    width: 100%;
+    background-color: #ccc
+}
+
+footer p {
+    padding: 15px;
+}
+
+.errorValidation {
+	color: #ff0000;
+	font-style: italic;
+	font-weight: bold;
+}
+.sessionTimer {
+	color: #ff0000;
+	font-style: italic;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.loginHeader {
+	color: #73AD21;
+	font-style: italic;
+	font-weight: bold;
+	font-size: 20px;
+	float: right;
+	width: 250px;
+	padding: 10px;
+	float: right;
+	font-weight: bold;
+}

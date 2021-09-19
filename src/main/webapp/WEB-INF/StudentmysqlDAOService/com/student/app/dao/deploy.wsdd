@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from StudentmysqlDAOService WSDL service -->
+
+  <service name="StudentmysqlDAO" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://dao.app.student.com"/>
+      <parameter name="wsdlServiceElement" value="StudentmysqlDAOService"/>
+      <parameter name="schemaQualified" value="http://model.couchbase.app.student.com,http://model.app.student.com,http://dao.app.student.com"/>
+      <parameter name="wsdlServicePort" value="StudentmysqlDAO"/>
+      <parameter name="className" value="com.student.app.dao.StudentmysqlDAO"/>
+      <parameter name="wsdlPortType" value="StudentmysqlDAO"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://dao.app.student.com" xmlns:retNS="http://dao.app.student.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getAllStudents" qname="operNS:getAllStudents" returnQName="retNS:getAllStudentsReturn" returnType="rtns:anyType" soapAction="">
+      </operation>
+      <operation xmlns:operNS="http://dao.app.student.com" xmlns:retNS="http://dao.app.student.com" xmlns:rtns="http://model.app.student.com" name="getStudent" qname="operNS:getStudent" returnQName="retNS:getStudentReturn" returnType="rtns:Student" soapAction="">
+        <parameter xmlns:pns="http://dao.app.student.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:id" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://dao.app.student.com" name="deleteStudent" qname="operNS:deleteStudent" soapAction="">
+        <parameter xmlns:pns="http://dao.app.student.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:id" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://dao.app.student.com" name="updateStudent" qname="operNS:UpdateStudent" soapAction="">
+        <parameter xmlns:pns="http://dao.app.student.com" xmlns:tns="http://model.app.student.com" qname="pns:student" type="tns:Student"/>
+      </operation>
+      <operation xmlns:operNS="http://dao.app.student.com" name="addStudent" qname="operNS:addStudent" soapAction="">
+        <parameter xmlns:pns="http://dao.app.student.com" xmlns:tns="http://model.app.student.com" qname="pns:student" type="tns:Student"/>
+      </operation>
+      <parameter name="allowedMethods" value="addStudent updateStudent getAllStudents deleteStudent getStudent"/>
+
+      <typeMapping xmlns:ns="http://dao.app.student.com" qname="ns:&gt;getStudentResponse" type="java:com.student.app.dao.GetStudentResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://dao.app.student.com" qname="ns:&gt;UpdateStudent" type="java:com.student.app.dao.UpdateStudent" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://dao.app.student.com" qname="ns:&gt;addStudentResponse" type="java:com.student.app.dao.AddStudentResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://dao.app.student.com" qname="ns:&gt;deleteStudent" type="java:com.student.app.dao.DeleteStudent" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://dao.app.student.com" qname="ns:&gt;getStudent" type="java:com.student.app.dao.GetStudent" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://dao.app.student.com" qname="ns:&gt;UpdateStudentResponse" type="java:com.student.app.dao.UpdateStudentResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://model.app.student.com" qname="ns:Student" type="java:com.student.app.model.Student" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://dao.app.student.com" qname="ns:&gt;deleteStudentResponse" type="java:com.student.app.dao.DeleteStudentResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://model.couchbase.app.student.com" qname="ns:ConcreteDocument" type="java:com.student.app.couchbase.model.ConcreteDocument" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://dao.app.student.com" qname="ns:&gt;addStudent" type="java:com.student.app.dao.AddStudent" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+  </service>
+</deployment>

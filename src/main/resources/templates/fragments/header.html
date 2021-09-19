@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:fragment="header">
+    <nav class="navbar navbar-inverse navbar-static-top">
+        <div class="container" th:if="${!#strings.isEmpty(session.loginUserName)}">
+            <div class="navbar-header">
+                <a class="navbar-brand" th:href="@{/loadStudentList}">
+                    <img th:src="@{/resources/img/logo.png}" alt="memorynotfound logo"/>
+                </a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a th:href="@{/loadStudentList}">Home</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li class="active error">
+                    <a >|</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a th:href="@{/addStudentDetails}">Add New Student</a>
+                    </li>
+                </ul>
+                  <ul class="nav navbar-nav">
+                    <li class="active error">
+                    <a >|</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a th:href="@{/upload}">Admin</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li class="active error">
+                    <a >|</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a th:href="@{/email}">Email</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li class="active error">
+                    <a >|</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a th:href="@{/logoutpage}">Log Out</a>
+                    </li>
+                </ul>
+                
+                         <div class="loginHeader"><span   th:text="Welcome"></span> 
+                         <span  th:text="${session.loginUserName}" id="loginUserName"></span>
+                         <div class="timer sessionTimer"></div>
+						<div  th:text="${sessiontime}" id="sessiontime" style="display:none;"></div>
+                    
+            </div>
+        </div>
+        </div>
+    </nav>
+</th:block>
+</body>
+</html>

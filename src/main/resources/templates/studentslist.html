@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>studentslist</title>
+    
+<!-- include javascript in the footer --><!-- 
+    <script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script> -->
+    <script type="text/javascript" th:src="@{/resources/js/postrequest.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/resources/css/student.css}"/>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+
+<div class="message" id="postResultDiv" style="display:none;"></div>
+	<table th:id="studentlisttable">
+		<thead>
+			<tr>
+				<th th:id="studentlistth">ID</th>
+				<th th:id="studentlistth">Name</th>
+				<th th:id="studentlistth">Age</th>
+				<th th:id="studentlistth">phone</th>
+				<th th:id="studentlistth">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+
+				<tr th:each="student : ${studentslist}" th:id="'studentRow_'+${student.id}">
+					<td th:id="studentlisttd" th:text="${student.id}"></td>
+					<td th:id="studentlisttd" th:text="${student.name}"></td>
+					<td th:id="studentlisttd" th:text="${student.age}"></td>
+					<td th:id="studentlisttd" th:text="${student.phone}"></td>
+					<td th:id="studentlisttd"><a class="editStudent" th:id="${student.id}">
+							<img th:src="@{/resources/img/edit.png}" alt="Edit Student Details"/>
+						</a> 
+						<a class="delStudent" th:id="${student.id}">
+							<img th:src="@{/resources/img/delete.png}" alt="Delete Student Details"/>
+						</a>
+					</td>
+				</tr>
+		</tbody>
+	</table>
+
+<div id="myModal"  class="modal">
+		<span class="close cursor" id="closeModal" >&times;</span>
+		<div class="modal-content" id="modal-content"></div>
+	</div>
+
+</div>
+</body>
+</html>
